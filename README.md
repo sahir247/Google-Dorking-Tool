@@ -113,6 +113,20 @@ If installed using the setup script:
 - **No Results**: Some queries may not return results. Try modifying your search terms or using different operators.
 - **Performance Issues**: When generating many dorks in Auto mode, the application may take a moment to process. This is normal behavior.
 
+## License
+This project is licensed under the MIT License - a permissive open-source license that allows nearly unrestricted use, modification, and distribution of the code.
+Feel free to use it in your own projects! See the LICENSE file for more details.
+
+## Contributing
+
+We welcome contributions! If you'd like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature-branch).
+3. Make your changes and commit (git commit -am 'Add new feature').
+4. Push to the branch (git push origin feature-branch).
+5. Open a pull request.
+
 ## Credits
 This tool was developed as an educational resource for security researchers, penetration testers, and IT professionals to understand the power and risks of Google dorking techniques.
 
