@@ -1,4 +1,4 @@
-# Google-Dorkin-tool
+# Google-Dorking-tool
 ## Overview
 The Google Dorking Tool is an advanced application that leverages Google's search capabilities to find specific information using specialized search operators (Google dorks). This tool provides both manual and automated dorking capabilities with a user-friendly interface.
 
