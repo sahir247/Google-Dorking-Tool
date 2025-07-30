@@ -244,7 +244,7 @@ This tool is meant for educational purposes and legitimate security testing only
 - Always obtain proper authorization before testing systems you do not own
 
 ## License
-This project is licensed for Educational Use Only. This tool is meant for educational purposes and legitimate security testing only. The developers are not responsible for any misuse or damage caused by this tool.
+This project is licensed under the GNU Affero General Public License v3.0 (AGPLv3) – see the LICENSE file for details.
 
 ## Version History
 - **v1.1** (July 2025): Major security and feature update with encrypted credentials, multi-tab UI, rate limiting
