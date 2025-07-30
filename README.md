@@ -244,11 +244,15 @@ This tool is meant for educational purposes and legitimate security testing only
 - Always obtain proper authorization before testing systems you do not own
 
 ## License
-This project is licensed under the GNU Affero General Public License v3.0 (AGPLv3) – see the LICENSE file for details.
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
+This project is licensed under the **[GNU Affero General Public License v3.0 (AGPLv3)](./LICENSE)**.  
+You are free to use, modify, and distribute this software under the same license.  
+See the [LICENSE](./LICENSE) file or visit the [GNU website](https://www.gnu.org/licenses/agpl-3.0.html) for full details.
 
 ## Version History
 - **v1.1** (July 2025): Major security and feature update with encrypted credentials, multi-tab UI, rate limiting
-- **v1.0** (Previous): Basic dorking functionality with hardcoded credentials
+- **v1.0** (May 2025): Basic dorking functionality with hardcoded credentials
 
 ## Contact & Support
 For support, issues, or suggestions:
