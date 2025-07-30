@@ -251,7 +251,7 @@ You are free to use, modify, and distribute this software under the same license
 See the [LICENSE](./LICENSE) file or visit the [GNU website](https://www.gnu.org/licenses/agpl-3.0.html) for full details.
 
 ## Version History
-- **v1.1** (July 2025): Major security and feature update with encrypted credentials, multi-tab UI, rate limiting
+- **v1.1** (August 2025): Major security and feature update with encrypted credentials, multi-tab UI, rate limiting
 - **v1.0** (May 2025): Basic dorking functionality with hardcoded credentials
 
 ## Contact & Support
