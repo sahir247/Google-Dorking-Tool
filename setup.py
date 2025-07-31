@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="GoogleDorkingTool",
-    version="1.1.0",
+    version="1.1",
     description="Google Dorking Tool: GUI for Google Custom Search API dorking with encryption, auto/manual building, and export features.",
     author="Sahir Parvez",
     author_email="parvezsahir@gmail.com",
