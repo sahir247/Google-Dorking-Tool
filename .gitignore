@@ -1,0 +1,17 @@
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Local credentials & state
+.google_dorking_tool/
+dist/
+build/
+*.spec

@@ -1,267 +1,159 @@
-# Google Dorking Tool v1.1 - Source Code Documentation
+# Google Dorking Tool v1.2
 
-## Overview
-`GoogleDorkingTool-v1.1.py` is an advanced Python-based application that provides a secure, modern graphical user interface for performing advanced Google searches using specialized search operators (Google dorks). This tool is designed for security researchers, penetration testers, and OSINT investigators with enhanced security features, encrypted credential management, and a comprehensive multi-tab interface.
+A PySide6 desktop application for building, explaining, running, filtering, and exporting Google dork queries for authorized OSINT and security assessment workflows.
 
-## Technical Requirements
-- Python 3.7 or higher
-- PyQt5 for the advanced GUI components
-- Requests library for API communication
-- Cryptography library for secure credential storage
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](./LICENSE)
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
+[![UI: PySide6](https://img.shields.io/badge/GUI-PySide6%20(Qt6)-green)](https://doc.qt.io/qtforpython/)
+[![Security: Fernet AES](https://img.shields.io/badge/Security-Fernet_AES--128-success)](https://cryptography.io/)
 
-## Installation for Development
-```bash
-# Clone the repository
-git clone https://github.com/sahir247/Google-Dorking-Tool.git
+This project is intended for security professionals, penetration testers, OSINT investigators, and students working on systems they own or are explicitly authorized to assess.
 
-# Install dependencies using the automated installer
-install_requirements.bat
+## Current maintenance status
 
-# Or install manually
-pip install PyQt5 requests cryptography
+Recent fixes and cleanup:
+
+- Fixed automated batch sweep result duplication by treating worker updates as cumulative result sets.
+- Added CSV formula-injection protection for exports opened in Excel or similar spreadsheet tools.
+- Counted API credential validation requests against the local quota tracker.
+- Added `pyproject.toml` so the release build workflow has packaging metadata.
+- Added standard GitHub issue templates under `.github/ISSUE_TEMPLATE/`.
+- Updated this README to match the current modular implementation.
+
+## Features
+
+- Multi-target query generation for:
+  - domains and hostnames
+  - email addresses
+  - person names
+  - usernames and keywords
+- Automatic target type detection with manual override.
+- Visual dork builder for `site:`, `intitle:`, `inurl:`, `intext:`, exact phrases, exclusions, and file types.
+- Curated OSINT/security dork templates.
+- Plain-English query explanation and live query complexity analysis.
+- Automated target sweep using Google Custom Search API.
+- Direct browser search mode that does not require API credentials.
+- Results explorer with filtering, category chips, pagination, context menu actions, and link opening.
+- Export formats:
+  - CSV with UTF-8 BOM and formula-injection hardening
+  - JSON
+  - styled HTML report
+  - Markdown
+  - plain text
+- Local bookmarks and search history.
+- Encrypted local API credential storage using Fernet when `cryptography` is available.
+- Daily API quota tracking with UTC-day rollover.
+- Dark and light QSS themes.
+
+## Project layout
+
+```text
+Google-Dorking-Tool-1.1/
+├── main.py                         # Standard application entry point
+├── GoogleDorkingTool-v1.2.py        # Windows-friendly versioned launcher
+├── requirements.txt                 # Runtime dependencies
+├── pyproject.toml                   # Packaging/build metadata
+├── run.bat                          # Windows launcher
+├── install_requirements.bat         # Windows dependency installer
+├── dork_tool/
+│   ├── engine.py                    # Dork generation, target detection, query analysis
+│   ├── workers.py                   # Background Google Custom Search API workers
+│   ├── models.py                    # SearchResult dataclass
+│   ├── exporter.py                  # CSV/JSON/HTML/Markdown/TXT exports
+│   ├── security.py                  # API credential storage and validation
+│   ├── rate_limiter.py              # Daily quota and request throttling
+│   ├── bookmarks.py                 # Bookmark/history persistence
+│   └── ui/                          # PySide6 UI tabs and styles
+└── scratch/test_modular_pyside6.py   # Local verification script
 ```
 
-## API Configuration
-The tool uses Google's Custom Search Engine (CSE) API with secure credential management. Unlike v1.0, API credentials are no longer hardcoded:
+## Installation
 
-1. **Secure Configuration via UI**:
-   - Open the Credentials tab in the application
-   - Enter your Google API Key and CSE ID
-   - Click Save (credentials are encrypted using Fernet encryption)
-   - Credentials are stored locally in `~/.google_dorking_tool/creds.dat`
+### Option A: Windows launcher
 
-2. **To obtain these credentials**:
-   - Google API Key: Create one at [Google Cloud Console](https://console.developers.google.com/apis/credentials)
-   - Custom Search Engine ID: Set up at [Google Custom Search Engine](https://cse.google.com/cse/all)
+1. Double-click `install_requirements.bat`.
+2. Double-click `run.bat`.
 
-## Code Structure
+### Option B: PowerShell or terminal
 
-### Main Components
-- **GoogleDorkingApp Class**: The main application class inheriting from QMainWindow with enhanced security
-- **CredentialManager Class**: Handles secure encryption/decryption of API credentials
-- **AdvancedRateLimiter Class**: Manages API rate limiting and daily quotas
-- **GoogleSearchWorker Class**: QThread-based worker for non-blocking search operations
-- **SearchResult Class**: Data container for search results with metadata
-
-### UI Architecture
-- **Multi-tab Interface**: Search, Results, Help, Credentials tabs
-- **Mode Selector**: Toggle between Manual and Auto dorking modes
-- **Progress Tracking**: Real-time search progress with status updates
-- **Responsive Design**: Non-blocking UI with threaded operations
-
-### Key Features Implemented
-
-1. **Enhanced Security & Credential Management**:
-   - Fernet encryption for API credentials
-   - Local encrypted storage in user home directory
-   - Real-time credential validation
-   - No hardcoded API keys in source code
-
-2. **Advanced Dual-mode Operation**:
-   - **Manual Dorking**: Custom search queries with 19+ operators and templates
-   - **Auto Dorking**: Intelligent query generation with 14 categories
-
-3. **Auto Dorking Categories** (Enhanced from v1.0):
-   - Basic Information
-   - Sensitive Files (PDF, DOC, XLSX)
-   - Exposed Directories
-   - Login Pages
-   - Potential Vulnerabilities
-   - Technologies (WordPress detection)
-   - Social Media Presence
-   - Email Addresses
-   - Subdomains
-   - Person Search
-   - Profile Pages
-   - Images
-   - News Articles
-   - Academic/Publications
-
-4. **Advanced Manual Dorking Tools** (New in v1.1):
-   - 19+ Google search operators support
-   - Operator insertion helper with value input
-   - 9 predefined query templates
-   - Site-specific search toggle
-   - SafeSearch option
-
-5. **Enhanced Results Management**:
-   - Multi-tab interface with dedicated Results tab
-   - Paginated results display (10/20/50/100 per page)
-   - Export to CSV, JSON, and TXT formats
-   - Sortable results table with clickable links
-   - Real-time search progress tracking
-   - Copy URL functionality
-   - Open links directly in browser
-
-6. **Performance & Rate Limiting** (New in v1.1):
-   - Advanced rate limiter with burst control
-   - Daily quota management (100 requests/day default)
-   - Thread-based search operations for non-blocking UI
-   - Progress tracking during searches
-
-7. **Built-in Help System** (Enhanced):
-   - Comprehensive user guide
-   - API setup instructions with clickable links
-   - Google dork operators reference
-   - Educational warnings and responsible use guidelines
-
-## Function Documentation
-
-### Core Classes
-
-#### `GoogleDorkingApp(QMainWindow)`
-Main application class with enhanced security and modern UI.
-
-**Key Methods:**
-- `__init__(self)`: Initializes app with credential manager and rate limiter
-- `_build_ui(self)`: Sets up multi-tab interface
-- `_build_search_tab(self)`: Creates search interface with dual modes
-- `_build_results_tab(self)`: Creates results table with pagination
-- `_build_help_tab(self)`: Provides comprehensive help system
-- `_build_cred_tab(self)`: Secure credential management interface
-
-#### `CredentialManager`
-Handles secure credential storage and validation.
-
-**Key Methods:**
-- `save(api_key, cse_id)`: Encrypts and saves credentials locally
-- `load()`: Decrypts and loads stored credentials
-- `validate(api_key, cse_id)`: Validates credentials with Google API
-
-#### `AdvancedRateLimiter`
-Manages API rate limiting and quota enforcement.
-
-**Key Methods:**
-- `wait()`: Enforces rate limits before API calls
-- Daily quota tracking and burst control
-
-#### `GoogleSearchWorker(QThread)`
-Thread-based worker for non-blocking search operations.
-
-**Key Methods:**
-- `run()`: Executes search queries in background thread
-- Emits progress signals and results
-
-### Enhanced Functions
-
-#### `_execute_queries(self, queries)`
-Executes multiple search queries using the threaded worker with progress tracking.
-
-#### `_run_auto(self)`
-Enhanced auto-dorking with category selection and intelligent query generation.
-
-#### `_run_manual(self)`
-Manual dorking with operator helpers and template support.
-
-#### `_export(self, format)`
-Enhanced export functionality supporting CSV, JSON, and TXT formats.
-
-#### `_populate_table(self)`
-Populates results table with pagination support.
-
-#### `_save_query(self)` / `_load_query(self)`
-Enhanced query save/load functionality.
-
-## What's New in v1.1
-
-### Security Enhancements
-- **Encrypted credential storage** using Fernet encryption
-- **API credential validation** with real-time feedback
-- **Secure local storage** in user home directory
-- **No hardcoded credentials** in source code
-
-### UI/UX Improvements
-- **Multi-tab interface** replacing single window design
-- **Mode selector** for Manual vs Auto dorking
-- **Progress tracking** with real-time status updates
-- **Responsive design** with non-blocking operations
-
-### Feature Additions
-- **Advanced rate limiting** with daily quota management
-- **Enhanced manual dorking** with 19+ operators
-- **Query templates** for common scenarios
-- **Thread-based operations** for better performance
-- **Comprehensive help system** with setup guides
-
-### Technical Improvements
-- **Modular architecture** with separate classes
-- **Type hints** throughout codebase
-- **Exception handling** and error reporting
-- **Cross-platform compatibility** improvements
-
-## Building from Source
-
-### Create Standalone Executable
-```bash
-# Install PyInstaller
-pip install pyinstaller
-
-# Create executable with resources
-python -m PyInstaller --onefile --windowed --add-data "github-mark.png;." --name "GoogleDorkingTool-v1.1" GoogleDorkingTool-v1.1.py
-
-# The executable will be in the dist/ directory
+```powershell
+python -m pip install -r requirements.txt
+python main.py
 ```
 
-### Development Setup
-```bash
-# Install development dependencies
-pip install -r requirements.txt
+You can also run the versioned launcher:
 
-# Run from source
-python GoogleDorkingTool-v1.1.py
+```powershell
+python GoogleDorkingTool-v1.2.py
 ```
 
-## Architecture Improvements
+### Option C: Install as a local package
 
-### Security Architecture
-- **Credential Manager**: Centralized, encrypted credential handling
-- **Rate Limiter**: API quota management and burst control
-- **Validation**: Real-time API credential validation
+```powershell
+python -m pip install .
+google-dorking-tool
+```
 
-### Performance Architecture
-- **Threading**: Non-blocking UI with QThread workers
-- **Pagination**: Efficient results display with configurable page sizes
-- **Caching**: Improved performance with session management
+## API setup
 
-### UI Architecture
-- **Multi-tab Design**: Organized interface with dedicated sections
-- **Progress Tracking**: Real-time feedback during operations
-- **Help System**: Built-in documentation and guides
+The in-app automated search mode uses the Google Custom Search JSON API.
 
-## Contributing
-Contributions to improve the Google Dorking Tool v1.1 are welcome:
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature-branch`)
-3. Make your changes and commit (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature-branch`)
-5. Submit a pull request
+1. Create or select a Google Cloud project.
+2. Enable the Custom Search API.
+3. Create an API key.
+4. Create a Programmable Search Engine and copy its Search Engine ID / CX.
+5. Open the app's `Credentials & Quota` tab and save both values.
 
-## Security Considerations
-This tool is meant for educational purposes and legitimate security testing only. Version 1.1 includes enhanced security features:
-- Encrypted credential storage
-- Rate limiting to prevent abuse
-- Educational warnings and responsible use guidelines
-- Always obtain proper authorization before testing systems you do not own
+Environment variables take precedence over saved credentials:
+
+```powershell
+$env:GOOGLE_API_KEY = "your-api-key"
+$env:GOOGLE_CSE_ID = "your-cse-id"
+python main.py
+```
+
+Direct browser mode does not need API credentials.
+
+## Local data storage
+
+The app stores local state under the current user's home directory:
+
+```text
+~/.google_dorking_tool/
+├── master.key       # Fernet key generated locally
+├── creds.dat        # encrypted credentials, or base64 fallback if cryptography is unavailable
+├── quota.json       # local daily request counter
+├── bookmarks.json   # saved dork bookmarks
+└── history.json     # recent execution history
+```
+
+Important security note: `creds.dat` is encrypted, but the encryption key is stored locally as `master.key`. This prevents casual plaintext exposure; it is not a replacement for operating-system account security or a dedicated secrets manager.
+
+## Testing and verification
+
+A local verification script is available:
+
+```powershell
+python scratch/test_modular_pyside6.py
+```
+
+It checks target detection, dork generation, query explanation, the visual form builder, QSS loading, and all export formats. It runs Qt in offscreen mode, but it still instantiates app managers and may create files under `~/.google_dorking_tool/`.
+
+## Packaging
+
+The repository now includes `pyproject.toml`, so the GitHub release workflow can build distributions with:
+
+```powershell
+python -m pip install build
+python -m build
+```
+
+The package includes the `dork_tool` modules plus QSS and Qt Designer assets.
+
+## Legal and ethical use
+
+Use this tool only for authorized security assessments, penetration testing, research, and education. Do not use it to target systems, organizations, or people without explicit permission and a lawful basis.
 
 ## License
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-This project is licensed under the **[GNU Affero General Public License v3.0 (AGPLv3)](./LICENSE)**.  
-You are free to use, modify, and distribute this software under the same license.  
-See the [LICENSE](./LICENSE) file or visit the [GNU website](https://www.gnu.org/licenses/agpl-3.0.html) for full details.
-
-## Version History
-- **v1.1** (August 2025): Major security and feature update with encrypted credentials, multi-tab UI, rate limiting
-- **v1.0** (May 2025): Basic dorking functionality with hardcoded credentials
-
-## Contact & Support
-For support, issues, or suggestions:
-- **GitHub**: [sahir247/Google-Dorking-Tool](https://github.com/sahir247/Google-Dorking-Tool)
-- **Issues**: Create an issue on the repository
-- **Discussions**: Use GitHub Discussions for questions
-
----
-
-**Developed by:** [sahir247](https://github.com/sahir247)  
-**Platform:** Windows (Executable) / Cross-platform (Python)  
-**Status:** Active Development
+This project is licensed under the [GNU Affero General Public License v3.0](./LICENSE).
