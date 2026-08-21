@@ -1,9 +1,11 @@
 """
 UI Loader and Theme Manager for PySide6 and Qt Designer.
+Seamless support for both development and PyInstaller frozen executable environments.
 Version 1.2.0
 """
 
 import os
+import sys
 from typing import Optional
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import QFile
@@ -15,15 +17,26 @@ except ImportError:
     UI_LOADER_AVAILABLE = False
 
 
+def get_ui_base_dir() -> str:
+    """Returns base directory for UI assets, supporting PyInstaller bundles."""
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        bundle_path = os.path.join(sys._MEIPASS, "dork_tool", "ui")
+        if os.path.exists(bundle_path):
+            return bundle_path
+    return os.path.dirname(__file__)
+
+
 class ThemeManager:
     """Loads and manages QSS stylesheets."""
 
-    STYLES_DIR = os.path.join(os.path.dirname(__file__), "styles")
+    @classmethod
+    def get_styles_dir(cls) -> str:
+        return os.path.join(get_ui_base_dir(), "styles")
 
     @classmethod
     def get_stylesheet(cls, theme_name: str = "dark") -> str:
         qss_filename = f"{theme_name.lower()}.qss"
-        qss_path = os.path.join(cls.STYLES_DIR, qss_filename)
+        qss_path = os.path.join(cls.get_styles_dir(), qss_filename)
         if os.path.exists(qss_path):
             try:
                 with open(qss_path, "r", encoding="utf-8") as f:
@@ -44,7 +57,7 @@ def load_ui_file(ui_relative_path: str, parent: Optional[QWidget] = None) -> Opt
     if not UI_LOADER_AVAILABLE:
         return None
 
-    full_path = os.path.join(os.path.dirname(__file__), ui_relative_path)
+    full_path = os.path.join(get_ui_base_dir(), ui_relative_path)
     if not os.path.exists(full_path):
         print(f"[WARN] UI file not found: {full_path}")
         return None

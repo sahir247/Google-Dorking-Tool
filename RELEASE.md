@@ -1,147 +1,121 @@
-# Google Dorking Tool v1.2.0 Release Notes
+# Google Dorking Tool v1.2.0 - Standalone Windows Executable (.exe)
 
-**Release Tag:** `v1.2.0`  
-**Release Name:** `Google Dorking Tool v1.2.0 - PySide6, Visual Dork Builder & Multi-Target OSINT Suite`  
-**Date:** August 21, 2026  
+**Release:** `v1.2.0`  
+**Binary Name:** `GoogleDorkingTool-v1.2.exe`  
+**Target Platform:** Windows 10 / 11 (64-bit)  
+**Distribution Type:** Portable Standalone Executable (Zero-Install, No Python Required)  
 **License:** GNU Affero General Public License v3.0 (AGPLv3)
 
 ---
 
-## 🌟 What's New in Version 1.2.0
+## 🚀 Quick Download & Run (No Python Required)
 
-Version 1.2.0 is a complete ground-up re-architecture from the legacy monolithic script to a high-performance, modular desktop application powered by **PySide6 (Qt 6.11+)**, **Qt Designer**, and external **QSS Stylesheets**.
+1. **Download:** Grab `GoogleDorkingTool-v1.2.exe` from the [GitHub Releases](https://github.com/sahir247/Google-Dorking-Tool/releases/tag/v1.2.0) page.
+2. **Launch:** Double-click `GoogleDorkingTool-v1.2.exe` to run immediately.
+   - *No Python installation or command-line setup required.*
+   - *All Qt6 libraries, cryptography engines, and QSS stylesheets are self-contained.*
 
-### 1. 📋 Interactive Visual Dork Form Builder
-- Construct complex Google Dorks without syntax errors or spacing bugs.
-- Dedicated input fields for:
-  - **In Title (`intitle:`)**: `admin, login, portal`
-  - **In URL (`inurl:`)**: `auth, wp-login, .php?id=`
+---
+
+## 🔒 Binary Integrity & Checksums
+
+Verify the authenticity and integrity of your downloaded `.exe` binary:
+
+| Property | Specification |
+| :--- | :--- |
+| **File Name** | `GoogleDorkingTool-v1.2.exe` |
+| **File Size** | ~53.5 MB |
+| **Architecture** | Windows x86_64 (64-bit Intel/AMD) |
+| **SHA-256 Checksum** | `DAFA24FBC8FEA88E2D201930CEBACE3CB4BA5144C848318DF7D52E1104C2A3DF` |
+
+### Verify Checksum in PowerShell:
+```powershell
+Get-FileHash -Algorithm SHA256 .\GoogleDorkingTool-v1.2.exe
+```
+
+---
+
+## 🌟 Executable Highlights & Capabilities
+
+### 1. 📋 Visual Dork Form Builder (Zero Syntax Errors)
+- Never memorize complex boolean syntax again. Fill in guided fields:
+  - **In Title (`intitle:`)**: `admin, dashboard, login`
+  - **In URL (`inurl:`)**: `portal, auth, wp-login`
   - **In Page Content (`intext:`)**: `password, confidential, API_KEY`
   - **Exact Phrase (`" "`)**: `"Index of /"`
   - **Exclusions (`-`)**: `github.com, stackoverflow.com`
 - **Clickable File Extension Pills**: One-click toggles for `PDF`, `DOCX`, `XLSX`, `SQL`, `ENV`, `LOG`, `BAK`, `CONF`, `YML`, and `JSON`.
 
----
+### 2. 🎯 Multi-Target Entity OSINT Support
+- **Domain Recon** (`target.com`): Subdomain enumeration, open directories, database dumps, cloud storage, and SQLi error discovery.
+- **Email OSINT** (`user@target.com`): Credential leaks, breach dumps, pastebins, employee rosters, and documents.
+- **Person OSINT** (`"John Doe"`): Resumes/CVs, social media footprints, court records, and conference presentations.
+- **Username OSINT** (`cyber_user`): GitHub/GitLab repositories, forum accounts, Docker registries, and leak combos.
 
-### 2. 🎯 Multi-Target Entity OSINT Engine
-No longer restricted to website domains. Intelligently tailors search syntax to the target entity:
-- **Domains & Hostnames** (`target.com`): Subdomain enumeration, open directories, database dumps, cloud buckets, and SQLi error discovery.
-- **Email Addresses** (`user@target.com`): Credential leaks, breach databases, pastebins, employee rosters, and sensitive documents.
-- **Person Names** (`"John Doe"`): Resumes/CVs, social media footprints, court/legal records, conference presentations, and direct contact lookups.
-- **Usernames & Keywords** (`cyber_user`): GitHub/GitLab repositories, developer profiles, Docker hubs, forum accounts, and leak combos.
+### 3. 💬 Real-Time Plain-English Query Explainer
+- Deconstructs your Google Dork queries in real time and displays a plain English translation directly below the editor.
+- Displays live metrics: Character Count, Word Count, Complexity Rating (`Low`, `Medium`, `High`), and Detected Operators.
 
----
+### 4. 🌐 Dual Search Execution
+- **In-App Google Custom Search API**: Automated batch sweeps, real-time result tables, pagination, and multi-format exports.
+- **Direct Browser Mode (Zero-API)**: One-click query launch in your default browser with **zero API keys and no daily quota limits**.
 
-### 3. 💬 Real-Time Plain-English Query Explainer & Complexity Analyzer
-- Automatically translates complex search dorks into plain, human-readable sentences directly below the query editor.
-- Live telemetry badge displaying token count, character counter, complexity level (`Simple`, `Moderate`, `Advanced`), and detected operator tags.
+### 5. 🛡️ Enterprise Security & Quota Protection
+- **Fernet AES-128 Encrypted Vault**: API credentials are encrypted locally in `~/.google_dorking_tool/creds.dat`.
+- **Token-Bucket Throttling**: Enforces request delays to prevent HTTP 429 rate limit bans.
+- **Daily Quota Meter**: Tracks daily requests with automatic UTC midnight resets.
+- **CSV Formula Injection (DDE) Defense**: Sanitizes spreadsheet control characters to protect exported data.
 
----
+### 6. 📊 5 Export Formats & Results Explorer
+- Instant search filtering and dynamic category breakdown chips.
+- Export findings into **CSV (Excel UTF-8 BOM)**, **JSON**, **Styled Dark HTML Executive Report**, **Markdown**, and **Plain Text**.
 
-### 4. 🚀 Dual Search Execution Modes
-- **Google Custom Search JSON API Mode**: Automated in-app execution, live findings table, dynamic category filtering, pagination, and multi-format reporting.
-- **Direct Web Browser Mode (Zero-API)**: Launches queries directly in your default browser. **Requires zero API keys and has no quota limits.**
-
----
-
-### 5. 🛡️ Security Hardening & Rate Limiting
-- **Fernet AES-128 Credential Vault**: Secures API keys and Custom Search IDs locally at `~/.google_dorking_tool/creds.dat`.
-- **Token-Bucket Throttling**: 1.2s delay enforcing compliance with Google rate limits.
-- **Daily Quota Meter**: Tracks requests against Google's free 100 queries/day tier with UTC midnight auto-reset.
-- **CSV Formula Injection (DDE) Defense**: Prefixes formula control characters (`=`, `+`, `-`, `@`) with a single quote to protect spreadsheet applications.
-- **HTML XSS Sanitization**: Escapes all crawled titles, URLs, and snippet texts in generated HTML reports.
+### 7. 🎨 Cyber Obsidian Dark & Clean Light QSS Themes
+- Full hardware-accelerated dark and light themes. Toggle anytime via `Ctrl+L`.
+- **Zero Emojis**: Clean, professional layout for security audits and penetration test reports.
 
 ---
 
-### 6. 📊 Results Explorer & Multi-Format Exporters
-- **Dynamic Category Filter Chips**: Instant category breakdown chips (`All`, `Login Pages`, `Credentials`, etc.) with real-time result counts.
-- **5 Export Formats**:
-  1. **CSV**: Excel-compatible with UTF-8 BOM and formula injection hardening.
-  2. **JSON**: Structured JSON with ISO timestamps.
-  3. **Styled HTML Report**: Standalone, responsive dark-themed executive dossier.
-  4. **Markdown**: GitHub-flavored Markdown tables.
-  5. **Plain Text**: Formatted ASCII text report.
+## ⌨️ Keyboard Shortcuts
+
+| Shortcut | Action |
+| :--- | :--- |
+| `Ctrl+Enter` | Execute Search (from query editor) |
+| `Ctrl+1` – `Ctrl+5` | Switch between tabs (Search, Results, Saved, Credentials, Guide) |
+| `Ctrl+L` | Toggle Dark / Light Theme |
+| `Ctrl+F` | Focus active tab's search / filter input |
+| `F5` | Refresh data and quota display |
 
 ---
 
-### 7. 🎨 Cyber Obsidian Dark & Clean Light Themes
-- Built with pure Vanilla QSS stylesheets (`dark.qss` and `light.qss`).
-- **Zero Emojis**: Professional, clean typography and standard cybersecurity designations.
-- **Non-Switching Tabs**: Eliminated accidental tab jumping during mouse wheel or trackpad scrolling.
-- **Global Keyboard Shortcuts**:
-  - `Ctrl+Enter`: Execute search from query box
-  - `Ctrl+1` - `Ctrl+5`: Switch between tabs
-  - `Ctrl+F`: Focus search/filter inputs
-  - `Ctrl+L`: Toggle Dark / Light theme
-  - `F5`: Refresh active data
+## 🛡️ Antivirus & Windows SmartScreen Notice
+
+Because `GoogleDorkingTool-v1.2.exe` is a standalone binary generated with PyInstaller and is not code-signed with an expensive EV certificate:
+- **Windows SmartScreen** may display *"Windows protected your PC"*.
+- **To Run:** Click **"More info"** and then select **"Run anyway"**.
+- The entire project is 100% open-source and can be independently inspected and compiled directly from source code.
 
 ---
 
-## 📦 Package Layout
+## ⚙️ Building the Executable from Source
 
-```text
-Google-Dorking-Tool-1.1/
-├── main.py                         # Canonical application entry point
-├── GoogleDorkingTool-v1.2.py        # Versioned top-level launcher
-├── GoogleDorkingTool-v1.1.py        # Backward compatibility redirect
-├── pyproject.toml                   # Standard packaging build metadata
-├── requirements.txt                 # Runtime dependencies
-├── run.bat                          # Windows one-click launcher
-├── install_requirements.bat         # Windows dependency installer
-├── README.md                        # Project documentation
-├── DOCUMENTATION.md                 # System architecture & technical specification
-├── RELEASE.md                       # This release document
-├── SECURITY.md                      # Security & vulnerability reporting policy
-├── LICENSE                          # AGPLv3 License
-├── .github/
-│   ├── workflows/python-publish.yml # Automated PyPI build and publish workflow
-│   └── ISSUE_TEMPLATE/              # Standard GitHub issue forms
-└── dork_tool/                       # Modular Python package
-    ├── models.py
-    ├── security.py
-    ├── rate_limiter.py
-    ├── engine.py
-    ├── workers.py
-    ├── bookmarks.py
-    ├── exporter.py
-    └── ui/
-        ├── loader.py
-        ├── main_window.py
-        ├── search_tab.py
-        ├── results_tab.py
-        ├── saved_tab.py
-        ├── creds_tab.py
-        ├── help_tab.py
-        ├── styles/ (dark.qss, light.qss)
-        └── designer/ (main_window.ui)
-```
+If you prefer building the `.exe` yourself:
 
----
-
-## 💻 Quick Start & Installation
-
-### Option A: Windows Launcher (One-Click)
-1. Double-click `install_requirements.bat`.
-2. Double-click `run.bat`.
-
-### Option B: Terminal / PowerShell
 ```powershell
-# Install dependencies
-python -m pip install -r requirements.txt
+# 1. Clone repository
+git clone https://github.com/sahir247/Google-Dorking-Tool.git
+cd Google-Dorking-Tool
 
-# Run application
-python GoogleDorkingTool-v1.2.py
-# Or: python main.py
-```
+# 2. Install dependencies & PyInstaller
+python -m pip install -r requirements.txt pyinstaller
 
-### Option C: Install as Package
-```powershell
-python -m pip install .
-google-dorking-tool
+# 3. Compile standalone executable
+pyinstaller --noconfirm --onefile --windowed --name "GoogleDorkingTool-v1.2" --add-data "dork_tool/ui/styles;dork_tool/ui/styles" --add-data "dork_tool/ui/designer;dork_tool/ui/designer" main.py
 ```
+The compiled binary will be placed in `dist/GoogleDorkingTool-v1.2.exe`.
 
 ---
 
-## ⚖️ License & Ethical Use
-- **License**: [GNU Affero General Public License v3.0 (AGPLv3)](./LICENSE)
-- **Ethical Disclaimer**: This tool is designed strictly for authorized penetration testing, security assessments, and legitimate OSINT research. Always obtain explicit authorization before testing any target.
+## ⚖️ License & Ethical Disclaimer
+- **License:** [GNU Affero General Public License v3.0 (AGPLv3)](./LICENSE)
+- **Legal Notice:** This tool is strictly intended for authorized security evaluations, educational research, and penetration testing on assets you own or have explicit authorization to assess.
