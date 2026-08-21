@@ -4,14 +4,15 @@ env/
 venv/
 ENV/
 
-# Python Cache
+# Python Cache & Packaging
 __pycache__/
 *.py[cod]
 *$py.class
 *.pyo
-
-# Local credentials & state
-.google_dorking_tool/
+*.egg-info/
 dist/
 build/
 *.spec
+
+# Local credentials & state
+.google_dorking_tool/
